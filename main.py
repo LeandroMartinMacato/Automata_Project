@@ -28,6 +28,7 @@ transition_function = {
     }
 }
 
+
 automaton = SimpleDFA(
     states=states,
     alphabet=alphabet,
@@ -47,27 +48,9 @@ automaton.accepts("00")       # True
 automaton.accepts("11")       # True
 automaton.accepts("01" * 42)  # True
 
+
 digraph = automaton.to_graphviz()
-# Now `digraph` is a `graphviz.dot.Digraph` object.
-digraph.render("my-even-01-automaton")
 
 
-# # Create object from pythomata SimpleDFA class
-# dfa = SimpleDFA(states, alphabet, initial_state,
-#                 accepting_states, transition_function)
-
-# # Word to test
-# word = "bbbac"
-
-# # Print if it accepts
-# print(dfa.accepts(word))
-
-# # Other Operation [minimize | Trim]
-# dfa_minimized = dfa.minimize()
-# dfa_trimmed = dfa.trim()
-
-
-# # translate into graph
-# graph = dfa.minimize().trim().to_graphviz()
-
-# graph.render(r"E:\Programming\Python\~PROJECTS\100-Days-Of-Code-Python")
+# Renger to DFA
+digraph.render("sample_automaton")
