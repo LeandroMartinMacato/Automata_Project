@@ -1,7 +1,7 @@
 # https://whitemech.github.io/pythomata/quickstart/
 
 from pythomata import SimpleDFA
-
+# choco install graphviz
 
 states = {"q0", "q1", "q2", "q3"}
 alphabet = {"0", "1"}
