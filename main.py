@@ -5,7 +5,15 @@
 # ( 1 + 0 )* (11 + 00 + 101 + 010) ( 1 + 0 + 11 + 00 + 101 )* ( 11 + 00 )
 # ( 11+ 00 + 101 )* ( 1 + 0 ) ( 1 + 0 + 11 )*
 
+# AUTOMATA MODULES
 from automata.fa.dfa import DFA
+from visual_automata.fa.dfa import VisualDFA
+import streamlit as sl
+
+# CONSTANTS
+q1 = [
+    "Question 1: ( b + aa + ab ) ( a + b )* ( bb + aba + ab )* ( aaa + bbb ) ( a + b ) ( a + b + ab )* "]
+q2 = ["Question 2: ( 1 + 0 )* (11 + 00 + 101 + 010) ( 1 + 0 + 11 + 00 + 101 )* ( 11 + 00 ) ( 11+ 00 + 101 )* ( 1 + 0 ) ( 1 + 0 + 11 )*"]
 
 dfa = DFA(
     states={'q0', 'q1', 'q2', 'q3', 'q4',
@@ -26,9 +34,15 @@ dfa = DFA(
     final_states={'q8'}
 )
 
-my_input_str = input("Enter String:")
 
+my_input_str = input("Enter String:")
 if dfa.accepts_input(my_input_str):
+    # dfa.show_diagram(my_input_str)
     print('accepted')
 else:
+    # dfa.show_diagram(my_input_str)
     print('rejected')
+
+
+# vis_dfa = VisualDFA(dfa)
+# vis_dfa.show_diagram("110111")
