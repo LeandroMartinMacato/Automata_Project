@@ -157,18 +157,15 @@ elif input_box == QUESTION[1]:
                         "deterministic-finite-automaton (DFA) Simulation:")
                     st.write(vis_dfa.show_diagram(second_user_input))
                     st.subheader("String is accepted! 🧙🏻‍♂️💯🎇")
-
                     # Table SECTION
                     df = pd.DataFrame(
                         vis_dfa.input_check(second_user_input))
-
                     listy = []
                     for x in df.iloc[:, 2]:
                         if x == "*q8":
                             listy.append("Final_State")
                         else:
                             listy.append("Accepted")
-
                     df["Accepted/Final_State"] = listy
                     st.write(df)
                     st.header("Context-Free Grammar(CFG):")
@@ -186,7 +183,6 @@ elif input_box == QUESTION[1]:
                     reset_button = st.form_submit_button(label="Reset")
                     if reset_button:
                         second_user_input = ""
-
             else:  # IF REJECTED
                 st.header(
                     "deterministic-finite-automaton (DFA) Simulation:")
@@ -194,9 +190,5 @@ elif input_box == QUESTION[1]:
                 st.subheader("String is not accepted! 🧙🏻‍♂️💢")
     except:
         st.write("Wrong Input!")
-
-    # Visual DFA
-
-
 else:
     st.header("⬅ Select an expression to start 🧝🏻‍♂️")
