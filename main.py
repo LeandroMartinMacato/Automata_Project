@@ -1,6 +1,3 @@
-# https://docs.streamlit.io/en/stable/
-
-# https://www.youtube.com/watch?v=Klqn--Mu2pE
 import pandas as pd
 from visual_automata.fa.dfa import VisualDFA
 from automata.fa.dfa import DFA
@@ -8,9 +5,7 @@ import streamlit as st
 from PIL import Image  # IMAGE MODULE
 
 # TODO
-# When switching expression the input stays
-# Fix Tracing Table when invalidated
-# * Not appearing in Q1 AND Q2
+# Reset input box when clicking reset button
 
 
 # CONSTANTS
