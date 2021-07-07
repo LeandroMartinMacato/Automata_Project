@@ -1,0 +1,9 @@
+streamlit == 0.83.0
+pandas == 1.2.5
+visual-automata == 1.1.1
+automata-lib == 4.0.0.post1
+
+
+
+
+
