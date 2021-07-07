@@ -8,30 +8,32 @@ import streamlit as st
 from PIL import Image  # IMAGE MODULE
 
 # TODO
-# WHILE NOTHING IS IN INPUT BOX DONT DISPLAY SHIT
-# When switching expression there will be an error becoz naka submit parin yung input FIXED
+# When switching expression the input stays
+# Fix Tracing Table when invalidated
+# * Not appearing in Q1 AND Q2
 
 
 # CONSTANTS
 QUESTION = ["First Expression", "Second Expression"]
-Q1 = "( b + aa + ab ) ( a + b )* ( bb + aba + ab )* ( aaa + bbb ) ( a + b ) ( a + b + ab )* "
-Q2 = "(1+0)* (11+00+101+010) ( 1+0+11+00+101)* (11+00) (11+00+101)* (1+0) (1+0+11)*"
+Q1 = "( b + aa + ab ) ( a + b )´ ( bb + aba + ab )´ ( aaa + bbb ) ( a + b ) ( a + b + ab )´"
+Q2 = "( 1 + 0 )´ ( 11 + 00 + 101 + 010 ) ( 1 + 0 + 11 + 00 + 101 )´ ( 11 + 00 ) (11 + 00 + 101 )´ ( 1 + 0 ) ( 1 + 0 + 11 )´"
 
 
 # Streamlit Start
-st.title("The Automata Wizard 🧝🏻‍♂️")
+st.title("The Automata Wizard 🧙🏻‍♂️")
 
 st.markdown("""
 
-#### Automata Wizard will help you check String if it is valid on 2 sample Regular Expression while simulating the path the string took in the DFA
+#### The Automata Wizard will help you check String if it is valid on 2 sample Regular Expression while simulating the path the string took in the deterministic finite automaton (DFA)
 """)
 
 image = Image.open("logo_wiz.png")
 st.sidebar.image(image)
 input_box = st.sidebar.selectbox(
-    "Select Expression:", (QUESTION[0], QUESTION[1]))  # select box
+    "Expression List:", ("Select an Expression", QUESTION[0], QUESTION[1]))  # select box
 
 # Page Control
+# FIRST EXPRESSION
 if input_box == QUESTION[0]:
     first_dfa = DFA(
         states={'q0', 'q1', 'q2', 'q3', 'q4',
@@ -55,24 +57,56 @@ if input_box == QUESTION[0]:
 
     st.header("Regular Expression:")
     st.subheader(Q1)
-    # st.write(q1)
+
+    # Input Form
     with st.form("form"):
+        st.header("String Checker 🧵")
         first_user_input = st.text_input(
-            label="Enter String To Check If Valid:")
+            label="Enter String To Check If Valid: ⤵")
         submit_button = st.form_submit_button(label="Submit")
 
     # Try catch to catch error from switching expression
     try:
+        if not first_user_input:
+            st.write("Enter a string to simulate DFA")
+        elif submit_button:
+            if first_dfa.accepts_input(first_user_input):
+                with st.form("1st Rectangle"):
+                    st.header(
+                        "deterministic-finite-automaton (DFA) Simulation:")
+                    st.write(vis_dfa.show_diagram(first_user_input))
+                    st.subheader("String is accepted! 🧙🏻‍♂️💯🎇")
 
-        if first_dfa.accepts_input(first_user_input):
-            st.write("ACCEPTED!")
-            st.write(vis_dfa.show_diagram(first_user_input))
-        else:
-            st.write("REJECTED!")
-            st.write(vis_dfa.show_diagram(first_user_input))
+                    # Table Simulation
+                    df = pd.DataFrame(
+                        vis_dfa.input_check(first_user_input))
+
+                    listy = []
+                    for x in df.iloc[:, 2]:
+                        if x == "*q8":
+                            # listy.append("Reject")
+                            listy.append("Final_State")
+                        else:
+                            listy.append("Accepted")
+
+                    df["Accepted/Final_State"] = listy
+                    st.write(df)
+                    # Reset
+                    reset_button = st.form_submit_button(label="Reset")
+                    if reset_button:
+                        first_user_input = " "
+
+            else:
+                st.header(
+                    "deterministic-finite-automaton (DFA) Simulation:")
+                st.write(vis_dfa.show_diagram(first_user_input))
+                st.subheader("String is not accepted! 🧙🏻‍♂️💢")
+
     except:
-        st.write("ERROR")
+        st.write("Wrong Input!")
 
+
+# SECOND EXPRESSION
 elif input_box == QUESTION[1]:
     dfa = DFA(
         states={'q0', 'q1', 'q2', 'q3', 'q4',
@@ -101,23 +135,50 @@ elif input_box == QUESTION[1]:
 
     # User input Box
     with st.form("form"):
+        st.header("String Checker 🧵")
         second_user_input = st.text_input(
-            label="Enter String To Check If Valid:")
+            label="Enter String To Check If Valid: ⤵")
         submit_button = st.form_submit_button(label="Submit")
 
     # Check if string is valid
     try:
-        if dfa.accepts_input(second_user_input):
-            st.write("ACCEPTED!")
-            st.write(vis_dfa.show_diagram(second_user_input))
-        else:
-            st.write("REJECTED!")
-            st.write(vis_dfa.show_diagram(second_user_input))
+        if not second_user_input:
+            st.write("Enter a string to simulate DFA")
+        elif submit_button:
+            if dfa.accepts_input(second_user_input):  # If accepted
+                with st.form("2nd Rectangle"):
+                    st.header(
+                        "deterministic-finite-automaton (DFA) Simulation:")
+                    st.write(vis_dfa.show_diagram(second_user_input))
+                    st.subheader("String is accepted! 🧙🏻‍♂️💯🎇")
+
+                    # Table SECTION
+                    df = pd.DataFrame(
+                        vis_dfa.input_check(second_user_input))
+
+                    listy = []
+                    for x in df.iloc[:, 2]:
+                        if x == "*q8":
+                            listy.append("Final_State")
+                        else:
+                            listy.append("Accepted")
+
+                    df["Accepted/Final_State"] = listy
+                    st.write(df)
+                    reset_button = st.form_submit_button(label="Reset")
+                    if reset_button:
+                        second_user_input = ""
+
+            else:  # IF REJECTED
+                st.header(
+                    "deterministic-finite-automaton (DFA) Simulation:")
+                st.write(vis_dfa.show_diagram(second_user_input))
+                st.subheader("String is not accepted! 🧙🏻‍♂️💢")
     except:
-        st.write("Clear Input First")
+        st.write("Wrong Input!")
 
     # Visual DFA
 
 
 else:
-    st.write("ERROR")
+    st.header("⬅ Select an expression to start 🧝🏻‍♂️")
