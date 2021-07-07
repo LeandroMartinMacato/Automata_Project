@@ -13,8 +13,9 @@ from PIL import Image  # IMAGE MODULE
 
 
 # CONSTANTS
-q1 = "( b + aa + ab ) ( a + b )* ( bb + aba + ab )* ( aaa + bbb ) ( a + b ) ( a + b + ab )* "
-q2 = "(1+0)* (11+00+101+010) ( 1+0+11+00+101)* (11+00) (11+00+101)* (1+0) (1+0+11)*"
+QUESTION = ["First Expression", "Second Expression"]
+Q1 = "( b + aa + ab ) ( a + b )* ( bb + aba + ab )* ( aaa + bbb ) ( a + b ) ( a + b + ab )* "
+Q2 = "(1+0)* (11+00+101+010) ( 1+0+11+00+101)* (11+00) (11+00+101)* (1+0) (1+0+11)*"
 
 
 # Streamlit Start
@@ -28,10 +29,10 @@ st.markdown("""
 image = Image.open("logo_wiz.png")
 st.sidebar.image(image)
 input_box = st.sidebar.selectbox(
-    "Select Expression:", (q1, q2))  # select box
+    "Select Expression:", (QUESTION[0], QUESTION[1]))  # select box
 
 # Page Control
-if input_box == q1:
+if input_box == QUESTION[0]:
     first_dfa = DFA(
         states={'q0', 'q1', 'q2', 'q3', 'q4',
                 'q5', 'q6', 'q7', 'q8'},
@@ -53,7 +54,7 @@ if input_box == q1:
     vis_dfa = VisualDFA(first_dfa)  # Create Visual DFA from DFA
 
     st.header("Regular Expression:")
-    st.subheader(q1)
+    st.subheader(Q1)
     # st.write(q1)
     with st.form("form"):
         first_user_input = st.text_input(
@@ -72,7 +73,7 @@ if input_box == q1:
     except:
         st.write("ERROR")
 
-elif input_box == q2:
+elif input_box == QUESTION[1]:
     dfa = DFA(
         states={'q0', 'q1', 'q2', 'q3', 'q4',
                 'q5', 'q6', 'q7', 'q8'},
@@ -96,7 +97,7 @@ elif input_box == q2:
     # Start
 
     st.header("Regular Expression:")
-    st.subheader(q2)
+    st.subheader(Q2)
 
     # User input Box
     with st.form("form"):
