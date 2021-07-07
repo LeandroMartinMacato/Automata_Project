@@ -1,28 +1,32 @@
 # https://docs.streamlit.io/en/stable/
 
 # https://www.youtube.com/watch?v=Klqn--Mu2pE
+import pandas as pd
+from visual_automata.fa.dfa import VisualDFA
+from automata.fa.dfa import DFA
+import streamlit as st
+from PIL import Image  # IMAGE MODULE
 
 # TODO
 # WHILE NOTHING IS IN INPUT BOX DONT DISPLAY SHIT
-# When switching expression there will be an error becoz naka submit parin yung input
-
-import streamlit as st
-from automata.fa.dfa import DFA
-from visual_automata.fa.dfa import VisualDFA
-import pandas as pd
+# When switching expression there will be an error becoz naka submit parin yung input FIXED
 
 
 # CONSTANTS
 q1 = "( b + aa + ab ) ( a + b )* ( bb + aba + ab )* ( aaa + bbb ) ( a + b ) ( a + b + ab )* "
 q2 = "(1+0)* (11+00+101+010) ( 1+0+11+00+101)* (11+00) (11+00+101)* (1+0) (1+0+11)*"
 
-st.title("Automata")
+
+# Streamlit Start
+st.title("The Automata Wizard 🧝🏻‍♂️")
 
 st.markdown("""
-# Automata 
-## 
+
+#### Automata Wizard will help you check String if it is valid on 2 sample Regular Expression while simulating the path the string took in the DFA
 """)
 
+image = Image.open("logo_wiz.png")
+st.sidebar.image(image)
 input_box = st.sidebar.selectbox(
     "Select Expression:", (q1, q2))  # select box
 
@@ -46,20 +50,27 @@ if input_box == q1:
         initial_state='q0',
         final_states={'q8'}
     )
-
     vis_dfa = VisualDFA(first_dfa)  # Create Visual DFA from DFA
-    st.write(q1)
+
+    st.header("Regular Expression:")
+    st.subheader(q1)
+    # st.write(q1)
     with st.form("form"):
         first_user_input = st.text_input(
             label="Enter String To Check If Valid:")
         submit_button = st.form_submit_button(label="Submit")
 
-    if first_dfa.accepts_input(first_user_input):
-        st.write("ACCEPTED!")
-        st.write(vis_dfa.show_diagram(first_user_input))
-    else:
-        st.write("REJECTED!")
-        st.write(vis_dfa.show_diagram(first_user_input))
+    # Try catch to catch error from switching expression
+    try:
+
+        if first_dfa.accepts_input(first_user_input):
+            st.write("ACCEPTED!")
+            st.write(vis_dfa.show_diagram(first_user_input))
+        else:
+            st.write("REJECTED!")
+            st.write(vis_dfa.show_diagram(first_user_input))
+    except:
+        st.write("ERROR")
 
 elif input_box == q2:
     dfa = DFA(
@@ -80,9 +91,12 @@ elif input_box == q2:
         initial_state='q0',
         final_states={'q8'}
     )
-
     vis_dfa = VisualDFA(dfa)
-    st.write(q2)
+
+    # Start
+
+    st.header("Regular Expression:")
+    st.subheader(q2)
 
     # User input Box
     with st.form("form"):
@@ -91,12 +105,15 @@ elif input_box == q2:
         submit_button = st.form_submit_button(label="Submit")
 
     # Check if string is valid
-    if dfa.accepts_input(second_user_input):
-        st.write("ACCEPTED!")
-        st.write(vis_dfa.show_diagram(second_user_input))
-    else:
-        st.write("REJECTED!")
-        st.write(vis_dfa.show_diagram(second_user_input))
+    try:
+        if dfa.accepts_input(second_user_input):
+            st.write("ACCEPTED!")
+            st.write(vis_dfa.show_diagram(second_user_input))
+        else:
+            st.write("REJECTED!")
+            st.write(vis_dfa.show_diagram(second_user_input))
+    except:
+        st.write("Clear Input First")
 
     # Visual DFA
 
