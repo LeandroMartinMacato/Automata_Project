@@ -10,8 +10,8 @@ from PIL import Image  # IMAGE MODULE
 
 # CONSTANTS
 QUESTION = ["First Expression", "Second Expression"]
-Q1 = "( b + aa + ab ) ( a + b )´ ( bb + aba + ab )´ ( aaa + bbb ) ( a + b ) ( a + b + ab )´"
-Q2 = "( 1 + 0 )´ ( 11 + 00 + 101 + 010 ) ( 1 + 0 + 11 + 00 + 101 )´ ( 11 + 00 ) (11 + 00 + 101 )´ ( 1 + 0 ) ( 1 + 0 + 11 )´"
+Q1 = "( b | aa | ab ) ( a | b )´ ( bb | aba | ab )´ ( aaa | bbb ) ( a | b ) ( a | b | ab )´"
+Q2 = "( 1 | 0 )´ ( 11 | 00 | 101 | 010 ) ( 1 | 0 | 11 | 00 | 101 )´ ( 11 | 00 ) (11 | 00 | 101 )´ ( 1 | 0 ) ( 1 | 0 | 11 )´"
 
 
 # Streamlit Start
@@ -86,6 +86,17 @@ if input_box == QUESTION[0]:
 
                     df["Accepted/Final_State"] = listy
                     st.write(df)
+                    st.header("Context-Free Grammar(CFG):")
+                    st.markdown(''' 
+                        Start symbol: S \n
+                        S → PQRTUV  \n
+                        P → b | aa | ab \n
+                        Q → aQ | bQ | ε \n
+                        R → bbR | abaR | abR | ε \n
+                        T → aaa | bbb \n
+                        U → a | b  \n		
+                        V → aε | bε | abε | ε	OR	V -> UV | abV | ε   \n
+                        ''')
                     # Reset
                     reset_button = st.form_submit_button(label="Reset")
                     if reset_button:
@@ -160,6 +171,18 @@ elif input_box == QUESTION[1]:
 
                     df["Accepted/Final_State"] = listy
                     st.write(df)
+                    st.header("Context-Free Grammar(CFG):")
+                    st.markdown('''
+                        Start symbol: S \n
+                        S → PQRTUVW \n
+                        P → 1P | 0P | ε \n
+                        Q → 11 | 00 | 101 | 010 \n
+                        R → 1R | 0R | 11R | 00R | 101R | ε \n
+                        T → 11 | 00 \n
+                        U → 11U | 00U | 101U | ε \n
+                        V → 1 | 0   \n
+                        W → 1W | 0W | 11W | ε \n
+                        ''')
                     reset_button = st.form_submit_button(label="Reset")
                     if reset_button:
                         second_user_input = ""
