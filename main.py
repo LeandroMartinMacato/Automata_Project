@@ -100,14 +100,12 @@ if input_box == QUESTION[0]:
                     # Reset
                     reset_button = st.form_submit_button(label="Reset")
                     if reset_button:
-                        first_user_input = " "
-
+                        first_user_input = ("")
             else:
                 st.header(
                     "deterministic-finite-automaton (DFA) Simulation:")
                 st.write(vis_dfa.show_diagram(first_user_input))
                 st.subheader("String is not accepted! 🧙🏻‍♂️💢")
-
     except:
         st.write("Wrong Input!")
 
